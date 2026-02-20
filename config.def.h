@@ -36,6 +36,7 @@ static const Rule rules[] = {
 	{ "obs",         NULL,       NULL,                       0,            1,           -1 },
 	{ "pavucontrol", NULL,       NULL,                       0,            1,           -1 },
 	{ "Spotify",     NULL,       NULL,                       0,            1,           -1 },
+	{ "Pcmanfm",     NULL,       NULL,                       0,            1,           -1 },
 };
 
 /* layout(s) */
