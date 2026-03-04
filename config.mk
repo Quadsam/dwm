@@ -12,7 +12,7 @@ INCS = `pkg-config --cflags-only-I freetype2`
 LIBS = `pkg-config --libs x11 xinerama fontconfig xft`
 
 # flags
-CPPFLAGS += -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DXINERAMA -DVERSION=\"${VERSION}\"
+CPPFLAGS += -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\"
 CFLAGS   += -g -std=c99 -pedantic -Wall -Wno-deprecated-declarations -O0 ${INCS} ${CPPFLAGS}
 LDFLAGS  += ${LIBS}
 

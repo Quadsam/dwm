@@ -1,30 +1,31 @@
 #include <X11/XF86keysym.h>
 #include <X11/keysym.h>
+#include <stdint.h>
 
-/* See LICENSE file for copyright and license details. */
+#define DWMDEF static const
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=8" };
-static const char dmenufont[]       = "monospace:size=8";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
-static const char *colors[][3]      = {
+DWMDEF uint32_t borderpx  = 1;        /* border pixel of windows */
+DWMDEF uint32_t snap      = 32;       /* snap pixel */
+DWMDEF int showbar        = 1;        /* 0 means no bar */
+DWMDEF int topbar         = 1;        /* 0 means bottom bar */
+DWMDEF char dmenufont[]   = "monospace:size=8";
+DWMDEF char *fonts[]      = { dmenufont };
+DWMDEF char col_gray1[]   = "#222222";
+DWMDEF char col_gray2[]   = "#444444";
+DWMDEF char col_gray3[]   = "#bbbbbb";
+DWMDEF char col_gray4[]   = "#eeeeee";
+DWMDEF char col_cyan[]    = "#005577";
+DWMDEF char *colors[][3]  = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+DWMDEF char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[] = {
+DWMDEF Rule rules[] = {
 	/* xprop(1):
 	   WM_CLASS(STRING) = instance, class
 	   WM_NAME(STRING) = title
@@ -42,13 +43,13 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
+DWMDEF float mfact     = 0.55f; /* factor of master area size [0.05..0.95] */
+DWMDEF int nmaster     = 1;     /* number of clients in master area */
+DWMDEF int resizehints = 1;     /* 1 means respect size hints in tiled resizals */
+DWMDEF int lockfullscreen = 1;  /* 1 will force focus on the fullscreen window */
+DWMDEF int refreshrate = 120;   /* refresh rate (per second) for client move/resize */
 
-static const Layout layouts[] = {
+DWMDEF Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
@@ -67,26 +68,27 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] =   { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  =   { "xterm", NULL };
-static const char *browsercmd[] = { "firefox", NULL };
+static char dmenumon[2]   = "0"; /* component of dmenucmd, manipulated in spawn() */
+DWMDEF char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+DWMDEF char *rebootcmd[]  = { "sudo", "shutdown", "-r", "+0", NULL };
+DWMDEF char *termcmd[]    = { "xterm", NULL };
+DWMDEF char *browsercmd[] = { "firefox", NULL };
 
 /* PipeWire volume commands */
-static const char wpctl[15] = "/usr/bin/wpctl";
-static const char *upvol[]   = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+",    NULL };
-static const char *downvol[] = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-",    NULL };
-static const char *mutevol[] = { wpctl, "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
+DWMDEF char wpctl[]  = "/usr/bin/wpctl";
+DWMDEF char *upvol[]   = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+",    NULL };
+DWMDEF char *downvol[] = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-",    NULL };
+DWMDEF char *mutevol[] = { wpctl, "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 
 /* Audio control commands */
-static const char playerctl[19] = "/usr/bin/playerctl";
-static const char *audiostop[] = { playerctl, "stop",       NULL };
-static const char *audioprev[] = { playerctl, "previous",   NULL };
-static const char *audioplay[] = { playerctl, "play-pause", NULL };
-static const char *audionext[] = { playerctl, "next",       NULL };
+DWMDEF char playerctl[] = "/usr/bin/playerctl";
+DWMDEF char *audiostop[] = { playerctl, "stop",       NULL };
+DWMDEF char *audioprev[] = { playerctl, "previous",   NULL };
+DWMDEF char *audioplay[] = { playerctl, "play-pause", NULL };
+DWMDEF char *audionext[] = { playerctl, "next",       NULL };
 
 
-static const Key keys[] = {
+DWMDEF Key keys[] = {
 	/* modifier,        key,                     function,       argument */
 	{ 0,                XF86XK_AudioRaiseVolume, spawn,          { .v = upvol      } },
 	{ 0,                XF86XK_AudioLowerVolume, spawn,          { .v = downvol    } },
@@ -98,27 +100,27 @@ static const Key keys[] = {
 	{ MODKEY,           XK_p,                    spawn,          { .v = dmenucmd   } },
 	{ MODKEY|ShiftMask, XK_Return,               spawn,          { .v = termcmd    } },
 	{ MODKEY|ShiftMask, XK_f,                    spawn,          { .v = browsercmd } },
-	{ MODKEY,           XK_b,                    togglebar,      {0} },
-	{ MODKEY,           XK_j,                    focusstack,     {.i = +1 } },
-	{ MODKEY,           XK_k,                    focusstack,     {.i = -1 } },
-	{ MODKEY,           XK_i,                    incnmaster,     {.i = +1 } },
-	{ MODKEY,           XK_d,                    incnmaster,     {.i = -1 } },
-	{ MODKEY,           XK_g,                    setmfact,       {.f = -0.05} },
-	{ MODKEY,           XK_h,                    setmfact,       {.f = +0.05} },
-	{ MODKEY,           XK_Return,               zoom,           {0} },
-	{ MODKEY,           XK_Tab,                  view,           {0} },
-	{ MODKEY|ShiftMask, XK_c,                    killclient,     {0} },
-	{ MODKEY,           XK_t,                    setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,           XK_f,                    setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,           XK_m,                    setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,           XK_space,                setlayout,      {0} },
-	{ MODKEY|ShiftMask, XK_space,                togglefloating, {0} },
-	{ MODKEY,           XK_0,                    view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask, XK_0,                    tag,            {.ui = ~0 } },
-	{ MODKEY,           XK_comma,                focusmon,       {.i = -1 } },
-	{ MODKEY,           XK_period,               focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask, XK_comma,                tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask, XK_period,               tagmon,         {.i = +1 } },
+	{ MODKEY,           XK_b,                    togglebar,      { 0} },
+	{ MODKEY,           XK_j,                    focusstack,     { .i = +1 } },
+	{ MODKEY,           XK_k,                    focusstack,     { .i = -1 } },
+	{ MODKEY,           XK_i,                    incnmaster,     { .i = +1 } },
+	{ MODKEY,           XK_d,                    incnmaster,     { .i = -1 } },
+	{ MODKEY,           XK_g,                    setmfact,       { .f = -0.05 } },
+	{ MODKEY,           XK_h,                    setmfact,       { .f = +0.05 } },
+	{ MODKEY,           XK_Return,               zoom,           { 0 } },
+	{ MODKEY,           XK_Tab,                  view,           { 0 } },
+	{ MODKEY|ShiftMask, XK_c,                    killclient,     { 0 } },
+	{ MODKEY,           XK_t,                    setlayout,      { .v = &layouts[0] } },
+	{ MODKEY,           XK_f,                    setlayout,      { .v = &layouts[1] } },
+	{ MODKEY,           XK_m,                    setlayout,      { .v = &layouts[2] } },
+	{ MODKEY,           XK_space,                setlayout,      { 0 } },
+	{ MODKEY|ShiftMask, XK_space,                togglefloating, { 0 } },
+	{ MODKEY,           XK_0,                    view,           { .ui = ~0 } },
+	{ MODKEY|ShiftMask, XK_0,                    tag,            { .ui = ~0 } },
+	{ MODKEY,           XK_comma,                focusmon,       { .i = -1 } },
+	{ MODKEY,           XK_period,               focusmon,       { .i = +1 } },
+	{ MODKEY|ShiftMask, XK_comma,                tagmon,         { .i = -1 } },
+	{ MODKEY|ShiftMask, XK_period,               tagmon,         { .i = +1 } },
 	TAGKEYS(            XK_1,                                    0)
 	TAGKEYS(            XK_2,                                    1)
 	TAGKEYS(            XK_3,                                    2)
@@ -128,12 +130,13 @@ static const Key keys[] = {
 	TAGKEYS(            XK_7,                                    6)
 	TAGKEYS(            XK_8,                                    7)
 	TAGKEYS(            XK_9,                                    8)
-	{ MODKEY|ShiftMask, XK_q,                    quit,           {0} },
+	{ MODKEY|ShiftMask, XK_q,                    quit,           { 0 } },
+	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = rebootcmd } },
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-static const Button buttons[] = {
+DWMDEF Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
