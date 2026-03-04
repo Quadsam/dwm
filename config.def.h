@@ -26,20 +26,19 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class                instance    title                       tags mask     isfloating   monitor */
-	{ "Gimp",               NULL,       NULL,                       0,            1,           -1 },
-	{ "Firefox",            NULL,       NULL,                       0,            0,           -1 },
-	{ "Firefox",            "Toolkit",  "Picture-In-Picture",       0,            1,           -1 },
-	{ "Obsidian",           NULL,       NULL,                       0,            1,           -1 },
-	{ "obs",                NULL,       NULL,                       0,            1,           -1 },
-	{ "pavucontrol",        NULL,       NULL,                       0,            1,           -1 },
-	{ "Spotify",            NULL,       NULL,                       0,            1,           -1 },
-	{ "Pcmanfm",            NULL,       NULL,                       0,            1,           -1 },
-	{ NULL,                 NULL,       "Calculator",               0,            1,           -1 },
-	{ "minecraft-launcher", NULL,       NULL,                       0,            1,           -1 },
+	   WM_CLASS(STRING) = instance, class
+	   WM_NAME(STRING) = title
+	*/
+	/* class                 instance               title                  tags mask  isfloating  monitor */
+	{ "Gimp",                NULL,                  NULL,                  0,         1,          -1 },
+	{ "Firefox",             NULL,                  NULL,                  0,         0,          -1 },
+	{ "Obsidian",            NULL,                  NULL,                  0,         1,          -1 },
+	{ "obs",                 NULL,                  NULL,                  0,         1,          -1 },
+	{ "pavucontrol",         NULL,                  NULL,                  0,         1,          -1 },
+	{ "Spotify",             NULL,                  NULL,                  0,         1,          -1 },
+	{ "Pcmanfm",             NULL,                  NULL,                  0,         1,          -1 },
+	{ NULL,                  NULL,                  "Calculator",          0,         1,          -1 },
+
 };
 
 /* layout(s) */
@@ -74,7 +73,7 @@ static const char *termcmd[]  =   { "xterm", NULL };
 static const char *browsercmd[] = { "firefox", NULL };
 
 /* PipeWire volume commands */
-static const char *wpctl[15] = "/usr/bin/wpctl"
+static const char wpctl[15] = "/usr/bin/wpctl";
 static const char *upvol[]   = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+",    NULL };
 static const char *downvol[] = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-",    NULL };
 static const char *mutevol[] = { wpctl, "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
@@ -98,7 +97,7 @@ static const Key keys[] = {
 	{ 0,                XF86XK_AudioNext,        spawn,          { .v = audionext  } },
 	{ MODKEY,           XK_p,                    spawn,          { .v = dmenucmd   } },
 	{ MODKEY|ShiftMask, XK_Return,               spawn,          { .v = termcmd    } },
-	{ MODKEY|ShiftMask, XK_f,                    spawn,          { .v = browsercmd } }
+	{ MODKEY|ShiftMask, XK_f,                    spawn,          { .v = browsercmd } },
 	{ MODKEY,           XK_b,                    togglebar,      {0} },
 	{ MODKEY,           XK_j,                    focusstack,     {.i = +1 } },
 	{ MODKEY,           XK_k,                    focusstack,     {.i = -1 } },
