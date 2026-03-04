@@ -14,7 +14,7 @@ all: dwm
 ${OBJ}: config.h config.mk
 
 config.h: config.def.h
-	cp config.def.h $@
+	cp $< $@
 
 dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
