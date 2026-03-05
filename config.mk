@@ -8,13 +8,13 @@ PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 
 # includes and libs
-INCS = `pkg-config --cflags-only-I freetype2`
+INCS = `pkg-config --cflags freetype2`
 LIBS = `pkg-config --libs x11 xinerama fontconfig xft`
 
 # flags
-CPPFLAGS += -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L -DVERSION=\"${VERSION}\"
-CFLAGS   += -g -std=c99 -pedantic -Wall -Wno-deprecated-declarations -O0 ${INCS} ${CPPFLAGS}
+CPPFLAGS += -D_DEFAULT_SOURCE -DVERSION=\"${VERSION}\"
+CFLAGS   += -std=gnu23 -Wall -O2 ${INCS}
 LDFLAGS  += ${LIBS}
 
 # compiler and linker
-CC = gcc
+CC = clang

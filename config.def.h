@@ -5,18 +5,18 @@
 #define DWMDEF static const
 
 /* appearance */
-DWMDEF uint32_t borderpx  = 1;        /* border pixel of windows */
-DWMDEF uint32_t snap      = 32;       /* snap pixel */
-DWMDEF int showbar        = 1;        /* 0 means no bar */
-DWMDEF int topbar         = 1;        /* 0 means bottom bar */
-DWMDEF char dmenufont[]   = "monospace:size=8";
-DWMDEF char *fonts[]      = { dmenufont };
-DWMDEF char col_gray1[]   = "#222222";
-DWMDEF char col_gray2[]   = "#444444";
-DWMDEF char col_gray3[]   = "#bbbbbb";
-DWMDEF char col_gray4[]   = "#eeeeee";
-DWMDEF char col_cyan[]    = "#005577";
-DWMDEF char *colors[][3]  = {
+DWMDEF uint32_t borderpx = 1;        /* border pixel of windows */
+DWMDEF uint32_t snap     = 32;       /* snap pixel */
+DWMDEF int showbar       = 1;        /* 0 means no bar */
+DWMDEF int topbar        = 1;        /* 0 means bottom bar */
+DWMDEF char dmenufont[]  = "monospace:size=8";
+DWMDEF char *fonts[]     = { dmenufont };
+DWMDEF char col_gray1[]  = "#222222";
+DWMDEF char col_gray2[]  = "#444444";
+DWMDEF char col_gray3[]  = "#bbbbbb";
+DWMDEF char col_gray4[]  = "#eeeeee";
+DWMDEF char col_cyan[]   = "#005577";
+DWMDEF char *colors[][3] = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
@@ -25,21 +25,21 @@ DWMDEF char *colors[][3]  = {
 /* tagging */
 DWMDEF char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+/*	xprop(1):
+ *	WM_CLASS(STRING) = instance, class
+ *	WM_NAME(STRING) = title
+ *	xprop | awk '/^WM_CLASS/{sub(/.* =/, "instance:"); sub(/,/, "\nclass:"); print} /^WM_NAME/{sub(/.* =/, "title:"); print}'
+ */
 DWMDEF Rule rules[] = {
-	/* xprop(1):
-	   WM_CLASS(STRING) = instance, class
-	   WM_NAME(STRING) = title
-	*/
-	/* class                 instance               title                  tags mask  isfloating  monitor */
-	{ "Gimp",                NULL,                  NULL,                  0,         1,          -1 },
-	{ "Firefox",             NULL,                  NULL,                  0,         0,          -1 },
-	{ "Obsidian",            NULL,                  NULL,                  0,         1,          -1 },
-	{ "obs",                 NULL,                  NULL,                  0,         1,          -1 },
-	{ "pavucontrol",         NULL,                  NULL,                  0,         1,          -1 },
-	{ "Spotify",             NULL,                  NULL,                  0,         1,          -1 },
-	{ "Pcmanfm",             NULL,                  NULL,                  0,         1,          -1 },
-	{ NULL,                  NULL,                  "Calculator",          0,         1,          -1 },
-
+	/* class          instance  title          tags mask  isfloating  monitor */
+	{ "Gimp",         NULL,     NULL,          0,         1,          -1 },
+	{ "Firefox",      NULL,     NULL,          0,         0,          -1 },
+	{ "Obsidian",     NULL,     NULL,          0,         1,          -1 },
+	{ "obs",          NULL,     NULL,          0,         1,          -1 },
+	{ "pavucontrol",  NULL,     NULL,          0,         1,          -1 },
+	{ "Spotify",      NULL,     NULL,          0,         1,          -1 },
+	{ "Pcmanfm",      NULL,     NULL,          0,         1,          -1 },
+	{ NULL,           NULL,     "Calculator",  0,         1,          -1 },
 };
 
 /* layout(s) */
@@ -68,25 +68,25 @@ DWMDEF Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2]   = "0"; /* component of dmenucmd, manipulated in spawn() */
-DWMDEF char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-DWMDEF char *rebootcmd[]  = { "sudo", "shutdown", "-r", "+0", NULL };
-DWMDEF char *termcmd[]    = { "xterm", NULL };
-DWMDEF char *browsercmd[] = { "firefox", NULL };
+static char dmenumon[2]    = "0";
+DWMDEF char *termcmd[]     = { "xterm", NULL };
+DWMDEF char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+DWMDEF char *rebootcmd[]   = { "sudo", "shutdown", "-r", "+0", NULL };
+DWMDEF char *browsercmd[]  = { "firefox", NULL };
+DWMDEF char *shutdowncmd[] = { "sudo", "shutdown", "+0", NULL };
 
 /* PipeWire volume commands */
-DWMDEF char wpctl[]  = "/usr/bin/wpctl";
+DWMDEF char wpctl[]    = "/usr/bin/wpctl";
 DWMDEF char *upvol[]   = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%+",    NULL };
 DWMDEF char *downvol[] = { wpctl, "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-",    NULL };
 DWMDEF char *mutevol[] = { wpctl, "set-mute",   "@DEFAULT_AUDIO_SINK@", "toggle", NULL };
 
 /* Audio control commands */
-DWMDEF char playerctl[] = "/usr/bin/playerctl";
+DWMDEF char playerctl[]  = "/usr/bin/playerctl";
 DWMDEF char *audiostop[] = { playerctl, "stop",       NULL };
 DWMDEF char *audioprev[] = { playerctl, "previous",   NULL };
 DWMDEF char *audioplay[] = { playerctl, "play-pause", NULL };
 DWMDEF char *audionext[] = { playerctl, "next",       NULL };
-
 
 DWMDEF Key keys[] = {
 	/* modifier,        key,                     function,       argument */
@@ -132,6 +132,7 @@ DWMDEF Key keys[] = {
 	TAGKEYS(            XK_9,                                    8)
 	{ MODKEY|ShiftMask, XK_q,                    quit,           { 0 } },
 	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = rebootcmd } },
+	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = shutdowncmd } },
 };
 
 /* button definitions */
