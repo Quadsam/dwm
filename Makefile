@@ -9,7 +9,7 @@ OBJ = ${SRC:.c=.o}
 all: dwm
 
 .c.o:
-	${CC} -c ${CFLAGS} ${CPPFLAGS} $<
+	${CC} -c ${CPPFLAGS} ${CFLAGS} $<
 
 ${OBJ}: config.h config.mk
 
@@ -17,7 +17,7 @@ config.h: config.def.h
 	cp $< $@
 
 dwm: ${OBJ}
-	${CC} -o $@ ${OBJ} ${LDFLAGS}
+	${CC} -o $@ ${OBJ} ${LDFLAGS} ${LDLIBS}
 
 clean:
 	rm -f dwm ${OBJ} config.h dwm-${VERSION}.tar.gz

@@ -1,20 +1,16 @@
 # dwm version
-VERSION = 6.8
-
-# Customize below to fit your system
-
-# paths
-PREFIX = /usr/local
-MANPREFIX = ${PREFIX}/share/man
-
-# includes and libs
-INCS = `pkg-config --cflags freetype2`
-LIBS = `pkg-config --libs x11 xinerama fontconfig xft`
-
-# flags
-CPPFLAGS += -D_DEFAULT_SOURCE -DVERSION=\"${VERSION}\"
-CFLAGS   += -std=gnu23 -Wall -O2 ${INCS}
-LDFLAGS  += ${LIBS}
+VERSION   := 6.8
 
 # compiler and linker
-CC = clang
+CC        := clang
+
+# paths
+PREFIX    := /usr/local
+MANPREFIX := ${PREFIX}/share/man
+
+# flags
+# CPPFLAGS  := -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700L
+CPPFLAGS  += `pkg-config --cflags freetype2` -DVERSION=\"${VERSION}\"
+CFLAGS    += -std=gnu23 -Wall -Os
+# LDFLAGS   +=
+LDLIBS    += -lX11 -lXinerama -lfontconfig -lXft
