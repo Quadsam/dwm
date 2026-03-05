@@ -25,6 +25,9 @@ DWMDEF char *colors[][3] = {
 /* tagging */
 DWMDEF char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+/* Lockfile */
+static char lockfile[] = "/tmp/dwm.lock";
+
 /*	xprop(1):
  *	WM_CLASS(STRING) = instance, class
  *	WM_NAME(STRING) = title
@@ -69,11 +72,11 @@ DWMDEF Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2]    = "0";
-DWMDEF char *termcmd[]     = { "xterm", NULL };
 DWMDEF char *dmenucmd[]    = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-DWMDEF char *rebootcmd[]   = { "sudo", "shutdown", "-r", "+0", NULL };
-DWMDEF char *browsercmd[]  = { "firefox", NULL };
 DWMDEF char *shutdowncmd[] = { "sudo", "shutdown", "+0", NULL };
+DWMDEF char *rebootcmd[]   = { "sudo", "shutdown", "-r", "+0", NULL };
+DWMDEF char *termcmd[]     = { "xterm", NULL };
+DWMDEF char *browsercmd[]  = { "firefox", NULL };
 
 /* PipeWire volume commands */
 DWMDEF char wpctl[]    = "/usr/bin/wpctl";
@@ -100,6 +103,8 @@ DWMDEF Key keys[] = {
 	{ MODKEY,           XK_p,                    spawn,          { .v = dmenucmd   } },
 	{ MODKEY|ShiftMask, XK_Return,               spawn,          { .v = termcmd    } },
 	{ MODKEY|ShiftMask, XK_f,                    spawn,          { .v = browsercmd } },
+	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = rebootcmd } },
+	{ MODKEY|ShiftMask, XK_Escape,               spawn,          { .v = shutdowncmd } },
 	{ MODKEY,           XK_b,                    togglebar,      { 0} },
 	{ MODKEY,           XK_j,                    focusstack,     { .i = +1 } },
 	{ MODKEY,           XK_k,                    focusstack,     { .i = -1 } },
@@ -131,8 +136,6 @@ DWMDEF Key keys[] = {
 	TAGKEYS(            XK_8,                                    7)
 	TAGKEYS(            XK_9,                                    8)
 	{ MODKEY|ShiftMask, XK_q,                    quit,           { 0 } },
-	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = rebootcmd } },
-	{ MODKEY|ShiftMask, XK_Delete,               spawn,          { .v = shutdowncmd } },
 };
 
 /* button definitions */
